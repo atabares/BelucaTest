@@ -20,7 +20,7 @@ public class Adjective extends Word {
 	}
 	
 	public Adjective(String line) {
-		this.fillWords(line);
-		this.fillRules(line);
+//		this.fillWords(line);
+//		this.fillRules(line);
 	}
 }

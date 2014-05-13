@@ -20,7 +20,7 @@ public class Pronoun extends Word {
 	}
 	
 	public Pronoun(String line) {
-		this.fillWords(line);
-		this.fillRules(line);
+//		this.fillWords(line);
+//		this.fillRules(line);
 	}
 }

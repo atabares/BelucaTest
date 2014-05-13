@@ -42,7 +42,7 @@ public class Word {
 	 * Fills the words list.
 	 * @param line
 	 */
-	public void fillWords(String line) {
+	private void fillWords(String line) {
 		String st = line.substring(line.indexOf(":") + 1, line.indexOf("<")).trim();
 		
 		StringTokenizer stt = new StringTokenizer(st, "|", false);
@@ -56,7 +56,7 @@ public class Word {
 	 * Fills the rules list.
 	 * @param line
 	 */
-	public void fillRules(String line) {
+	private void fillRules(String line) {
 		String st = line.substring(line.indexOf("<"), line.length()).trim();
 		
 		StringTokenizer stt = new StringTokenizer(st, "|", false);
