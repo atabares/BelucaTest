@@ -62,81 +62,53 @@ public class Poem {
 		String line = "";
 		
 		for (int i=0; i<lineRules.size()-1; i++) {
-			try {
-//				String sentencePartName = Character.toUpperCase(((String) lineRules.get(i).toLowerCase()).charAt(0))
-//						+ lineRules.get(i).toLowerCase().substring(1);
+			try {	
 				String sentencePartName = lineRules.get(i);
 				
-//				Class<?> wordClass = Class.forName("sentence." + sentencePartName);
-				Class<?> wordClass = Class.forName("generator.Word");
-				Object wordInstance = null;
+				Word wordClass = null;
 				
 				if (sentencePartName.equalsIgnoreCase("ADJECTIVE")) {
-					wordInstance = wordClass.getConstructor(new Class[] {String.class}).newInstance(new Object[] {adjective});
+					wordClass = new Word(adjective);
 				} else if (sentencePartName.equalsIgnoreCase("NOUN")) {
-					wordInstance = wordClass.getConstructor(new Class[] {String.class}).newInstance(new Object[] {noun});
+					wordClass = new Word(noun);
 				} else if (sentencePartName.equalsIgnoreCase("PRONOUN")) {
-					wordInstance = wordClass.getConstructor(new Class[] {String.class}).newInstance(new Object[] {pronoun});
+					wordClass = new Word(pronoun);
 				} else if (sentencePartName.equalsIgnoreCase("VERB")) {
-					wordInstance = wordClass.getConstructor(new Class[] {String.class}).newInstance(new Object[] {verb});
+					wordClass = new Word(verb);
 				} else if (sentencePartName.equalsIgnoreCase("PREPOSITION")) {
-					wordInstance = wordClass.getConstructor(new Class[] {String.class}).newInstance(new Object[] {preposition});
+					wordClass = new Word(preposition);
 				}
 				
-				Method wordMethod = wordClass.getMethod("getWord", null);
-				line = line.concat((String) wordMethod.invoke(wordInstance, null));
+				line = line.concat((String) wordClass.getWord());
 				
-				Method ruleMethod = wordClass.getMethod("getRule", null);
 				String rule = "";
-				rule = (String) ruleMethod.invoke(wordInstance, null);
+				rule = (String) wordClass.getRule();
 				
 				while (!rule.equalsIgnoreCase("END")) {
-//					String recursiveSentencePartName = Character.toUpperCase((rule.toLowerCase()).charAt(0))
-//							+ rule.toLowerCase().substring(1);
 					String recursiveSentencePartName = rule;
 		
-//					Class<?> ruleClass = Class.forName("sentence." + recursiveSentencePartName);
-					Class<?> ruleClass = Class.forName("generator.Word");
-					Object recursiveWordInstance = null;
+					Word ruleClass = null;
 					
 					if (recursiveSentencePartName.equalsIgnoreCase("ADJECTIVE")) {
-						recursiveWordInstance = ruleClass.getConstructor(new Class[] {String.class}).newInstance(new Object[] {adjective});
+						ruleClass = new Word(adjective);
 					} else if (recursiveSentencePartName.equalsIgnoreCase("NOUN")) {
-						recursiveWordInstance = ruleClass.getConstructor(new Class[] {String.class}).newInstance(new Object[] {noun});
+						ruleClass = new Word(noun);
 					} else if (recursiveSentencePartName.equalsIgnoreCase("PRONOUN")) {
-						recursiveWordInstance = ruleClass.getConstructor(new Class[] {String.class}).newInstance(new Object[] {pronoun});
+						ruleClass = new Word(pronoun);
 					} else if (recursiveSentencePartName.equalsIgnoreCase("VERB")) {
-						recursiveWordInstance = ruleClass.getConstructor(new Class[] {String.class}).newInstance(new Object[] {verb});
+						ruleClass = new Word(verb);
 					} else if (recursiveSentencePartName.equalsIgnoreCase("PREPOSITION")) {
-						recursiveWordInstance = ruleClass.getConstructor(new Class[] {String.class}).newInstance(new Object[] {preposition});
+						ruleClass = new Word(preposition);
 					}
 					
-					Method recursiveWordMethod = ruleClass.getMethod("getWord", null);
-					line = line.concat((String) recursiveWordMethod.invoke(recursiveWordInstance, null));
+					line = line.concat((String) ruleClass.getWord());
 					
-					Method recursiveRuleMethod = ruleClass.getMethod("getRule", null);
-					rule = (String) recursiveRuleMethod.invoke(recursiveWordInstance, null);
+					rule = (String) ruleClass.getRule();
 				}
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} catch (SecurityException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (NoSuchMethodException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				System.out.println(e.getCause());
-			} catch (InstantiationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
