@@ -1,0 +1,7 @@
+#all the stuff we don't want to check into git
+*.class
+*.war
+*.jar
+*.ear
+#ignore the build folder from maven
+bin/
