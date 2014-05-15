@@ -60,48 +60,22 @@ public class Poem {
 	 */
 	private static String generateLine () {
 		String line = "";
+		String rule = "";
 		
 		for (int i=0; i<lineRules.size()-1; i++) {
 			try {	
 				String sentencePartName = lineRules.get(i);
 				
-				Word wordClass = null;
+				Word wordClass = instClass(sentencePartName);
+				line = line.concat((String) ((Word) wordClass).getWord());
 				
-				if (sentencePartName.equalsIgnoreCase("ADJECTIVE")) {
-					wordClass = new Word(adjective);
-				} else if (sentencePartName.equalsIgnoreCase("NOUN")) {
-					wordClass = new Word(noun);
-				} else if (sentencePartName.equalsIgnoreCase("PRONOUN")) {
-					wordClass = new Word(pronoun);
-				} else if (sentencePartName.equalsIgnoreCase("VERB")) {
-					wordClass = new Word(verb);
-				} else if (sentencePartName.equalsIgnoreCase("PREPOSITION")) {
-					wordClass = new Word(preposition);
-				}
-				
-				line = line.concat((String) wordClass.getWord());
-				
-				String rule = "";
 				rule = (String) wordClass.getRule();
 				
 				while (!rule.equalsIgnoreCase("END")) {
 					String recursiveSentencePartName = rule;
 		
-					Word ruleClass = null;
-					
-					if (recursiveSentencePartName.equalsIgnoreCase("ADJECTIVE")) {
-						ruleClass = new Word(adjective);
-					} else if (recursiveSentencePartName.equalsIgnoreCase("NOUN")) {
-						ruleClass = new Word(noun);
-					} else if (recursiveSentencePartName.equalsIgnoreCase("PRONOUN")) {
-						ruleClass = new Word(pronoun);
-					} else if (recursiveSentencePartName.equalsIgnoreCase("VERB")) {
-						ruleClass = new Word(verb);
-					} else if (recursiveSentencePartName.equalsIgnoreCase("PREPOSITION")) {
-						ruleClass = new Word(preposition);
-					}
-					
-					line = line.concat((String) ruleClass.getWord());
+					Word ruleClass = instClass(recursiveSentencePartName);
+					line = line.concat((String) ((Word) ruleClass).getWord());
 					
 					rule = (String) ruleClass.getRule();
 				}
@@ -117,6 +91,29 @@ public class Poem {
 		line = line.concat("\n");
 		
 		return line;
+	}
+	
+	/**
+	 * Create a new Word object.
+	 * @param sentencePartName
+	 * @return A new Word object.
+	 */
+	public static Word instClass (String sentencePartName) {
+		Word wordClass = null;
+		
+		if (sentencePartName.equalsIgnoreCase("ADJECTIVE")) {
+			wordClass = new Word(adjective);
+		} else if (sentencePartName.equalsIgnoreCase("NOUN")) {
+			wordClass = new Word(noun);
+		} else if (sentencePartName.equalsIgnoreCase("PRONOUN")) {
+			wordClass = new Word(pronoun);
+		} else if (sentencePartName.equalsIgnoreCase("VERB")) {
+			wordClass = new Word(verb);
+		} else if (sentencePartName.equalsIgnoreCase("PREPOSITION")) {
+			wordClass = new Word(preposition);
+		}
+		
+		return wordClass;
 	}
 	
 	/**
